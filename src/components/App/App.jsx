@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { imageSearch } from '../ImagesApi/ImagesApi';
 import ImageGallery from '../ImageGallery/ImageGallery';
 import { notify } from '../Toast/Toast';
@@ -22,11 +22,17 @@ const App = () => {
     const [showModal, setShowModal] = useState(false);
     const [imageInfo, setImageInfo] = useState('');
 
+    useEffect(() => {
+        if (query) {
+            handleSearch(query,currentPage);
+        }
+    }, [query, currentPage]);
+
+
     const handleSubmit = (userQuery) => {
         setQuery(userQuery);
         setCurrentPage(1);
         setImagesData([]);
-        handleSearch(userQuery, 1);
     };
 
     const handleSearch = async (topic, page) => {
@@ -52,15 +58,11 @@ const App = () => {
 
         const handleNextPage = () => {
             if (currentPage < maxPage) {
-                const nextPage = currentPage + 1;
-                setCurrentPage(nextPage);
-
+                setCurrentPage((prevPage) => prevPage + 1);
                 window.scrollTo({
                     top: document.documentElement.scrollHeight,
                     behavior: 'smooth',
                 });
-
-                handleSearch(query, nextPage);
             }
         };
 

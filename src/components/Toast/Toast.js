@@ -8,5 +8,9 @@ const toastOptions = {
 };
 
 export const notify = (state, message) => {
+    if (!['success', 'error', 'loading'].includes(state)) {
+        console.error('Invalid toast state');
+        return;
+    }
     toast[state](message, {...toastOptions});
-}
+};
