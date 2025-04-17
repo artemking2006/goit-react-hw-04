@@ -25,7 +25,7 @@ const App = () => {
     const handleSubmit = (userQuery) => {
         setQuery(userQuery);
         setCurrentPage(1);
-        setImageInfo([]);
+        setImagesData([]);
         handleSearch(userQuery, 1);
     };
 
